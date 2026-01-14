@@ -1,0 +1,23 @@
+[0;1;32m●[0m travelphabet_com.service - Gunicorn daemon for travelphabet.com
+     Loaded: loaded (/etc/systemd/system/travelphabet_com.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Wed 2025-07-23 14:08:44 UTC; 5 months 22 days ago
+   Main PID: 1769 (gunicorn)
+      Tasks: 4 (limit: 9477)
+     Memory: 129.9M
+        CPU: 45min 47.416s
+     CGroup: /system.slice/travelphabet_com.service
+             ├─   1769 /var/www/travelphabet.com/venv/bin/python3 /var/www/travelphabet.com/venv/bin/gunicorn --workers 3 --bind unix:/var/www/travelphabet.com/gunicorn.sock config.wsgi:application
+             ├─   1879 /var/www/travelphabet.com/venv/bin/python3 /var/www/travelphabet.com/venv/bin/gunicorn --workers 3 --bind unix:/var/www/travelphabet.com/gunicorn.sock config.wsgi:application
+             ├─   1884 /var/www/travelphabet.com/venv/bin/python3 /var/www/travelphabet.com/venv/bin/gunicorn --workers 3 --bind unix:/var/www/travelphabet.com/gunicorn.sock config.wsgi:application
+             └─2586572 /var/www/travelphabet.com/venv/bin/python3 /var/www/travelphabet.com/venv/bin/gunicorn --workers 3 --bind unix:/var/www/travelphabet.com/gunicorn.sock config.wsgi:application
+
+Jan 14 10:43:39 server gunicorn[2586572]: Not Found: /wp-activate.php/
+Jan 14 10:43:40 server gunicorn[2586572]: Not Found: /wp-admin.php/
+Jan 14 10:43:41 server gunicorn[2586572]: Not Found: /wp-trackback.php/
+Jan 14 10:43:42 server gunicorn[2586572]: Not Found: /xmlrpc.php/
+Jan 14 10:43:43 server gunicorn[1879]: Not Found: /xmrlpc.php/
+Jan 14 10:43:44 server gunicorn[2586572]: Not Found: /adminfuns.php/
+Jan 14 11:07:27 server gunicorn[2586572]: Not Found: /robots.txt/
+Jan 14 11:58:03 server gunicorn[1879]: Not Found: /robots.txt/
+Jan 14 12:14:23 server gunicorn[2586572]: Not Found: /robots.txt/
+Jan 14 14:29:07 server gunicorn[1879]: Not Found: /ads.txt/

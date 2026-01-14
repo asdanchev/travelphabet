@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% block title %}Create Article — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="editor">
+  <h1 class="editor__title">Create Article</h1>
+
+  <form method="post" enctype="multipart/form-data" class="editor__form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="editor__field">
+      <label for="id_images" class="editor__label">Images</label>
+      <input type="file" name="images" id="id_images" multiple class="editor__input">
+    </div>
+
+    <div class="editor__actions">
+      <button type="submit" class="btn btn--primary">Publish</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+  {{ form.media }}
+{% endblock %}

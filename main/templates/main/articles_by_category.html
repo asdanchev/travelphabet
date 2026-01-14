@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load article_extras %}
+
+{% block title %}{{ category }} — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="category-page">
+  <h1 class="category-page__title">{{ category }}</h1>
+
+  {% if articles %}
+    <div class="cards-grid">
+      {% for article in articles %}
+        <article class="card card--article">
+          {% with article.content|first_image as image_url %}
+            {% if image_url %}
+              <a class="card__media" href="{% url 'article_detail' article.letter article.slug %}">
+                <img src="{{ image_url }}" class="card__image" alt="{{ article.title }}">
+              </a>
+            {% endif %}
+          {% endwith %}
+
+          <div class="card__body">
+            <h2 class="card__title">
+              <a href="{% url 'article_detail' article.letter article.slug %}" class="card__link">
+                {{ article.title }}
+              </a>
+            </h2>
+
+            <div class="card__meta">
+              {{ article.created_at|date:"M d, Y" }}
+            </div>
+
+            <p class="card__excerpt">
+              {{ article.content|strip_tags_except_img|striptags|truncatewords:30 }}
+            </p>
+
+            <div class="card__footer">
+              <a href="{% url 'article_detail' article.letter article.slug %}" class="btn btn--sm btn--outline">
+                Read more
+              </a>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="category-page__empty">No articles in this category yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

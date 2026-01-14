@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Edit article — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <div class="editor-card card shadow-sm">
+        <div class="editor-card__header">
+          <h1 class="editor-card__title">Edit article</h1>
+        </div>
+
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data" class="editor-form">
+            {% csrf_token %}
+
+            <div class="editor-field">
+              <label for="id_letter" class="editor-label">Letter</label>
+              {{ form.letter }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_title" class="editor-label">Title</label>
+              {{ form.title }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_slug" class="editor-label">Slug</label>
+              {{ form.slug }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_category" class="editor-label">Category</label>
+              {{ form.category }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_content" class="editor-label">Article content</label>
+              {{ form.content }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_location_info" class="editor-label">Location</label>
+              {{ form.location_info }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_how_to_get" class="editor-label">How to get there</label>
+              {{ form.how_to_get }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_travel_tips" class="editor-label">Travel tips</label>
+              {{ form.travel_tips }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_location_map_embed" class="editor-label">Map embed (iframe)</label>
+              {{ form.location_map_embed }}
+            </div>
+
+            <div class="editor-field">
+              <label for="id_images" class="editor-label">Photos</label>
+              <input type="file" name="images" id="id_images" class="form-control" multiple>
+              <div class="editor-help">
+                You can upload multiple images. They will be optimized automatically.
+              </div>
+            </div>
+
+            <div class="editor-actions">
+              <button type="submit" class="btn btn-success">
+                Save changes
+              </button>
+              <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                Cancel
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+  {{ form.media }}
+{% endblock %}

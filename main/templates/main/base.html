@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+
+  <title>{% block title %}Travelphabet — The ABC of Travel{% endblock %}</title>
+
+  <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+</head>
+
+<body class="layout">
+
+  <!-- Header / Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand navbar-brand-custom" href="/">
+        <img src="{% static 'img/logo_main.png' %}" alt="Travelphabet logo" class="navbar-logo">
+        <div class="navbar-brand-text">
+          <span class="brand-title">Travelphabet</span>
+          <span class="brand-subtitle">The ABC of Travel</span>
+        </div>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        {% with request.resolver_match.url_name as current %}
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link {% if current == 'home' %}is-active{% endif %}" href="/">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if current == 'article_list' %}is-active{% endif %}" href="{% url 'article_list' %}">Articles</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if current == 'contact' %}is-active{% endif %}" href="{% url 'contact' %}">Contact</a>
+          </li>
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link {% if current == 'dashboard' %}is-active{% endif %}" href="{% url 'dashboard' %}">Editor</a>
+            </li>
+
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}" class="nav-logout-form">
+                {% csrf_token %}
+                <button type="submit" class="nav-link nav-link-button">Logout</button>
+              </form>
+            </li>
+          {% endif %}
+        </ul>
+        {% endwith %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Alphabet bar -->
+  <div class="alphabet-bar-wrapper">
+    <div class="alphabet-bar">
+      {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+        <a href="/{{ letter|lower }}/" class="alphabet-link">{{ letter }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Mobile alphabet scroll -->
+  <div class="alphabet-scroll-mobile d-md-none">
+    <div class="alphabet-scroll-track">
+      {% for i in "123" %}
+        {% for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+          <a href="/{{ letter|lower }}/" class="alphabet-link">{{ letter }}</a>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main class="page-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Scroll to top -->
+  <a href="#" id="scrollToTop" class="scroll-to-top d-lg-none" aria-label="Scroll to top">
+    <i class="bi bi-arrow-up"></i>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer-minimal">
+    <div class="container text-center">
+      <small>
+        © 2025 Travelphabet — The ABC of Travel ·
+        <a href="mailto:info@travelphabet.com">info@travelphabet.com</a> ·
+        <a href="https://instagram.com/travelphabet" target="_blank" rel="noopener">
+          <i class="bi bi-instagram"></i> travelphabet
+        </a>
+      </small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      GLightbox({ selector: '.glightbox' });
+
+      const scrollBtn = document.getElementById('scrollToTop');
+      const toggleScrollBtn = () => {
+        scrollBtn.classList.toggle('is-visible', window.scrollY > 120);
+      };
+
+      toggleScrollBtn();
+      window.addEventListener('scroll', toggleScrollBtn);
+
+      scrollBtn.addEventListener('click', e => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

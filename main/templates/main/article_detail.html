@@ -1,0 +1,190 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ article.title }} — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="article-page">
+  <div class="article-layout">
+
+    <!-- Left sidebar (desktop) -->
+    <aside class="article-sidebar article-sidebar--left d-none d-lg-block">
+      <div class="sidebar-card">
+        <div class="sidebar-title">{{ article.title }}</div>
+      </div>
+
+      {% if request.user == article.author %}
+        <div class="sidebar-card sidebar-card--center">
+          <a href="{% url 'edit_article' article.id %}" class="btn btn--sm btn--outline w-100">
+            Edit
+          </a>
+        </div>
+      {% endif %}
+
+      {% if article.images.all %}
+        <div class="sidebar-card">
+          <div class="sidebar-label">Photos</div>
+
+          <div class="thumb-strip">
+            <button class="thumb-strip__btn thumb-strip__btn--left" type="button" onclick="scrollGallery('left')">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+
+            <div id="sidebarGallery" class="thumb-strip__track">
+              {% for img in article.images.all %}
+                <a href="{{ img.image.url }}" class="glightbox thumb" data-gallery="sidebar-gallery">
+                  <img src="{{ img.image.url }}" alt="Photo preview" class="thumb__img">
+                </a>
+              {% endfor %}
+            </div>
+
+            <button class="thumb-strip__btn thumb-strip__btn--right" type="button" onclick="scrollGallery('right')">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+
+          <a href="#" id="open-gallery" class="btn btn--sm btn--outline w-100 mt-3">View all photos</a>
+        </div>
+      {% endif %}
+
+      {% if other_articles %}
+        <div class="sidebar-card">
+          <div class="sidebar-label">More articles</div>
+          <div class="sidebar-links">
+            {% for other in other_articles %}
+              <a href="/{{ other.letter }}/{{ other.slug }}/" class="sidebar-link">
+                {{ other.title }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </aside>
+
+    <!-- Main content -->
+    <main class="article-main">
+      <!-- Location + map + hero image -->
+      <article class="panel panel--hero">
+        <div class="hero">
+          <div class="hero__content">
+            {% if article.category and category_url %}
+              <a href="{{ category_url }}" class="hero__category">{{ article.category }}</a>
+            {% endif %}
+
+            <h1 class="hero__title">{{ article.title }}</h1>
+
+            {% if article.location_info %}
+              <div class="hero__location">
+                {{ article.location_info|linebreaks }}
+              </div>
+            {% endif %}
+
+            {% if article.location_map_embed %}
+              <div class="hero__map">
+                <div class="map-embed">
+                  {{ article.location_map_embed|safe }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="hero__media">
+            {% if article.images.all %}
+              {% with article.images.all.0 as preview_image %}
+                <a href="{{ preview_image.image.url }}" class="glightbox hero__image-link">
+                  <div class="hero__image-frame">
+                    <img src="{{ preview_image.image.url }}" alt="{{ article.title }}" class="hero__image">
+                  </div>
+                </a>
+              {% endwith %}
+            {% endif %}
+          </div>
+        </div>
+      </article>
+
+      <!-- Photos (mobile only) -->
+      {% if article.images.all %}
+        <section class="panel panel--mobile-gallery d-lg-none">
+          <h2 class="panel__title">Photos</h2>
+
+          <div id="mobileGallery" class="thumb-strip__track thumb-strip__track--mobile">
+            {% for img in article.images.all %}
+              <a href="{{ img.image.url }}" class="glightbox thumb" data-gallery="mobile-gallery">
+                <img src="{{ img.image.url }}" alt="Photo preview" class="thumb__img">
+              </a>
+            {% endfor %}
+          </div>
+
+          <a href="#" id="open-gallery-mobile" class="btn btn--sm btn--outline w-100 mt-3">View all</a>
+        </section>
+      {% endif %}
+
+      <!-- Article body -->
+      {% if article.content %}
+        <section class="panel panel--content">
+          <div class="article-content">
+            {{ article.content|safe }}
+          </div>
+        </section>
+      {% endif %}
+
+      <!-- Tips + How to get (mobile bottom) -->
+      <div class="d-lg-none">
+        {% if article.travel_tips %}
+          <section class="panel panel--side">
+            <h2 class="panel__title">Travel tips</h2>
+            <div class="panel__text">{{ article.travel_tips|linebreaks }}</div>
+          </section>
+        {% endif %}
+
+        {% if article.how_to_get %}
+          <section class="panel panel--side">
+            <h2 class="panel__title">How to get there</h2>
+            <div class="panel__text">{{ article.how_to_get|linebreaks }}</div>
+          </section>
+        {% endif %}
+      </div>
+    </main>
+
+    <!-- Right sidebar (desktop) -->
+    <aside class="article-sidebar article-sidebar--right d-none d-lg-block">
+      {% if article.travel_tips %}
+        <section class="sidebar-card">
+          <div class="sidebar-label">Travel tips</div>
+          <div class="sidebar-text">{{ article.travel_tips|linebreaks }}</div>
+        </section>
+      {% endif %}
+
+      {% if article.how_to_get %}
+        <section class="sidebar-card">
+          <div class="sidebar-label">How to get there</div>
+          <div class="sidebar-text">{{ article.how_to_get|linebreaks }}</div>
+        </section>
+      {% endif %}
+    </aside>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebarLightbox = GLightbox({ selector: '[data-gallery="sidebar-gallery"]' });
+    const openSidebarBtn = document.getElementById('open-gallery');
+    if (openSidebarBtn) {
+      openSidebarBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sidebarLightbox.open();
+      });
+    }
+
+    const mobileLightbox = GLightbox({ selector: '[data-gallery="mobile-gallery"]' });
+    const openMobileBtn = document.getElementById('open-gallery-mobile');
+    if (openMobileBtn) {
+      openMobileBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        mobileLightbox.open();
+      });
+    }
+  });
+</script>
+{% endblock %}

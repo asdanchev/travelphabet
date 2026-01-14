@@ -1,0 +1,13 @@
+asgiref==3.8.1
+beautifulsoup4==4.13.4
+Django==5.2.3
+django-ckeditor==6.7.3
+django-js-asset==3.1.2
+gunicorn==23.0.0
+packaging==25.0
+pillow==11.3.0
+python-decouple==3.8
+soupsieve==2.7
+sqlparse==0.5.3
+typing_extensions==4.14.0
+Unidecode==1.4.0

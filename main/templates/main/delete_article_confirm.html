@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% block title %}Delete article — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="delete-article">
+
+    <h1 class="delete-article__title">Delete article</h1>
+
+    <p class="delete-article__text">
+      Are you sure you want to delete
+      <strong>“{{ article.title }}”</strong>?
+    </p>
+
+    <form method="post" class="delete-article__actions">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">
+        Delete
+      </button>
+      <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+        Cancel
+      </a>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

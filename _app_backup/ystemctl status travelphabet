@@ -1,0 +1,23 @@
+[0;1;32m●[0m gunicorn.service - Gunicorn daemon for Travelphabet
+     Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Wed 2025-07-23 14:08:44 UTC; 5 months 22 days ago
+   Main PID: 1758 (gunicorn)
+      Tasks: 4 (limit: 9477)
+     Memory: 147.3M
+        CPU: 41min 38.700s
+     CGroup: /system.slice/gunicorn.service
+             ├─   1758 /var/www/travelphabet.kz/app/venv/bin/python3 /var/www/travelphabet.kz/app/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/var/www/travelphabet.kz/app/gunicorn.sock config.wsgi:application
+             ├─2584270 /var/www/travelphabet.kz/app/venv/bin/python3 /var/www/travelphabet.kz/app/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/var/www/travelphabet.kz/app/gunicorn.sock config.wsgi:application
+             ├─2584273 /var/www/travelphabet.kz/app/venv/bin/python3 /var/www/travelphabet.kz/app/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/var/www/travelphabet.kz/app/gunicorn.sock config.wsgi:application
+             └─2586578 /var/www/travelphabet.kz/app/venv/bin/python3 /var/www/travelphabet.kz/app/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/var/www/travelphabet.kz/app/gunicorn.sock config.wsgi:application
+
+Jan 14 14:25:02 server gunicorn[2584273]:  - - [14/Jan/2026:14:25:02 +0000] "GET /robots.txt HTTP/1.0" 301 0 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+Jan 14 14:25:02 server gunicorn[2584270]:  - - [14/Jan/2026:14:25:02 +0000] "GET /robots.txt/ HTTP/1.0" 404 179 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+Jan 14 14:55:39 server gunicorn[2584273]:  - - [14/Jan/2026:14:55:39 +0000] "GET /robots.txt HTTP/1.0" 400 143 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+Jan 14 15:02:49 server gunicorn[2586578]:  - - [14/Jan/2026:15:02:49 +0000] "GET /robots.txt HTTP/1.0" 301 0 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+Jan 14 15:02:49 server gunicorn[2584273]:  - - [14/Jan/2026:15:02:49 +0000] "GET /robots.txt/ HTTP/1.0" 404 179 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+Jan 14 15:02:50 server gunicorn[2584273]:  - - [14/Jan/2026:15:02:50 +0000] "GET /%D0%B9/ HTTP/1.0" 200 9664 "-" "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.7499.192 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+Jan 14 15:04:55 server gunicorn[2584270]:  - - [14/Jan/2026:15:04:55 +0000] "GET /robots.txt HTTP/1.0" 301 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36; compatible; OAI-SearchBot/1.0; +https://openai.com/searchbot"
+Jan 14 15:04:55 server gunicorn[2584270]:  - - [14/Jan/2026:15:04:55 +0000] "GET /robots.txt/ HTTP/1.0" 404 179 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36; compatible; OAI-SearchBot/1.0; +https://openai.com/searchbot"
+Jan 14 15:04:55 server gunicorn[2584270]:  - - [14/Jan/2026:15:04:55 +0000] "GET /robots.txt/ HTTP/1.0" 404 179 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36; compatible; OAI-SearchBot/1.0; +https://openai.com/searchbot"
+Jan 14 15:23:41 server gunicorn[2586578]:  - - [14/Jan/2026:15:23:41 +0000] "GET / HTTP/1.0" 200 18078 "-" "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; ChatGPT-User/1.0; +https://openai.com/bot"

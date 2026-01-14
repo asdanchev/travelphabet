@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+
+{% block title %}Sign in — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="editor">
+    <h1 class="editor__title">Sign in</h1>
+
+    <form method="post" class="editor__form">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="editor-actions">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

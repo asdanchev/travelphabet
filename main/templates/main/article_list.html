@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% block title %}Articles — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="articles-page">
+  <h1 class="articles-page__title">Articles</h1>
+
+  {% if page_obj %}
+    <div class="articles-grid">
+      {% for a in page_obj %}
+        <article class="article-tile">
+          <h2 class="article-tile__title">
+            <a href="/{{ a.letter }}/{{ a.slug }}/" class="article-tile__link">{{ a.title }}</a>
+          </h2>
+
+          {% if a.category %}
+            <div class="article-tile__meta">{{ a.category }}</div>
+          {% endif %}
+        </article>
+      {% empty %}
+        <p class="articles-page__empty">No articles yet.</p>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="articles-page__empty">No articles yet.</p>
+  {% endif %}
+
+  <nav class="pager" aria-label="Pagination">
+    {% if page_obj.has_previous %}
+      <a class="pager__link" href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+    {% else %}
+      <span class="pager__link pager__link--disabled">← Previous</span>
+    {% endif %}
+
+    <span class="pager__info">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a class="pager__link" href="?page={{ page_obj.next_page_number }}">Next →</a>
+    {% else %}
+      <span class="pager__link pager__link--disabled">Next →</span>
+    {% endif %}
+  </nav>
+</div>
+{% endblock %}

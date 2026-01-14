@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% block title %}My Articles — Travelphabet{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+  <div class="dashboard__header">
+    <h1 class="dashboard__title">My Articles</h1>
+    <a href="{% url 'create_article' %}" class="btn btn--primary">+ New article</a>
+  </div>
+
+  {% if articles %}
+    <div class="article-list">
+      {% for article in articles %}
+        <div class="article-card">
+          <div class="article-card__info">
+            <a href="/{{ article.letter }}/{{ article.slug }}/" class="article-card__title">
+              {{ article.title }}
+            </a>
+            <div class="article-card__meta">
+              {{ article.created_at|date:"M d, Y • H:i" }}
+            </div>
+          </div>
+
+          <div class="article-card__actions">
+            <a href="{% url 'edit_article' article.pk %}" class="btn btn--sm btn--outline btn--warning">Edit</a>
+            <a
+              href="{% url 'delete_article' article.pk %}"
+              class="btn btn--sm btn--outline btn--danger"
+              onclick="return confirm('Delete the article “{{ article.title|escapejs }}”?');"
+            >
+              Delete
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="dashboard__empty">No articles yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

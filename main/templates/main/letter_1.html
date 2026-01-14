@@ -1,0 +1,80 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load article_extras %}
+
+{% block title %}A — Abu Dhabi | Travelphabet{% endblock %}
+
+{% block content %}
+<!-- Hero / current letter -->
+<header class="video-header">
+    <!-- Desktop video -->
+    <video autoplay muted loop playsinline class="video-desktop d-none d-md-block">
+        <source src="{% static 'video/louvre-desktop.webm' %}" type="video/webm">
+    </video>
+
+    <!-- Mobile video -->
+    <video autoplay muted loop playsinline class="video-mobile d-block d-md-none">
+        <source src="{% static 'video/louvre-mobile.webm' %}" type="video/webm">
+    </video>
+
+    <div class="video-overlay">
+        <h1 class="video-title">A — is for Abu Dhabi</h1>
+        <p class="video-subtitle">
+          Luxury of the East, futuristic skyscrapers, and white sandy beaches
+        </p>
+    </div>
+</header>
+
+<!-- Articles -->
+<section class="articles-section">
+  <div class="container">
+    <h2 class="articles-title">{{ category }}</h2>
+
+    {% if articles %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for article in articles %}
+          <div class="col">
+            <article class="article-card card h-100 shadow-sm">
+
+              {% with article.content|first_image as image_url %}
+                {% if image_url %}
+                  <div class="article-card__image article-card__image--fixed">
+                    <img src="{{ image_url }}"
+                         class="w-100 h-100"
+                         loading="lazy"
+                         alt="{{ article.title }}">
+                  </div>
+                {% endif %}
+              {% endwith %}
+
+              <div class="card-body d-flex flex-column">
+                <h5 class="article-card__title">
+                  <a href="{% url 'article_detail' article.letter article.slug %}">
+                    {{ article.title }}
+                  </a>
+                </h5>
+
+                <p class="article-card__date">
+                  {{ article.created_at|date:"F d, Y" }}
+                </p>
+
+                <p class="article-card__excerpt">
+                  {{ article.content|strip_tags_except_img|striptags|truncatewords:30 }}
+                </p>
+
+                <a href="{% url 'article_detail' article.letter article.slug %}"
+                   class="btn btn-sm btn-outline-travelphabet mt-2">
+                  Read more
+                </a>
+              </div>
+
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="articles-empty">No articles for this destination yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
