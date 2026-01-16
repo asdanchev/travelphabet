@@ -50,6 +50,12 @@ body::-webkit-scrollbar{
   background: var(--primary) !important;
 }
 
+/* Keep navbar above hero video */
+.navbar-custom{
+  position: relative;
+  z-index: 1000;
+}
+
 .navbar .nav-link,
 .navbar-custom .nav-link{
   color:#fff;
@@ -167,6 +173,8 @@ body::-webkit-scrollbar{
   width: 100%;
   background: var(--secondary);
   padding: .5rem 0;
+  position: relative;
+  z-index: 900; /* above hero video */
 }
 
 .alphabet-bar{
@@ -199,25 +207,40 @@ body::-webkit-scrollbar{
   .alphabet-bar-wrapper{ display:none; }
 }
 
-/* Mobile alphabet scroll */
+/* Mobile alphabet scroll: USER SWIPES (scroll on wrapper, not track) */
 .alphabet-scroll-mobile{
   background: var(--secondary);
   padding: .5rem 0;
-  overflow: hidden;
+
+  overflow-x: auto;              /* ✅ allow horizontal scroll */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  white-space: nowrap;
+
+  scrollbar-width: none;         /* Firefox hide scrollbar */
+  -ms-overflow-style: none;      /* old Edge/IE */
+
+  position: relative;
+  z-index: 900;                  /* above hero video */
+}
+.alphabet-scroll-mobile::-webkit-scrollbar{
+  display:none;                  /* Chrome/Safari hide scrollbar */
 }
 
+/* Track: width = content width; NO overflow here */
 .alphabet-scroll-track{
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding-left: 12px;
+  padding: 0 12px;
   white-space: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  width: max-content;            /* important for correct scroll */
 }
 
+/* Links: do not stretch on mobile */
 .alphabet-scroll-track .alphabet-link{
-  flex: 0 0 auto;   /* on mobile letters should not stretch */
+  flex: 0 0 auto;
   padding: 0;
   font-size: 1.1rem;
 }
@@ -240,29 +263,45 @@ body::-webkit-scrollbar{
   text-decoration:underline;
 }
 
-/* ===== Video header ===== */
-.video-header{
-  position:relative;
-  overflow:hidden;
-  height:72vh;
+.video-header {
+    position: relative;
+    overflow: hidden;
+    height: 60vh;
 }
-.video-header video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+
+/* Видео — обычный фон */
+.video-header video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
-.video-overlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:0 16px;
-  color:#fff;
-  background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.55));
-  text-shadow: 1px 1px 2px #000;
+
+/* Текст + затемнение — поверх видео */
+.video-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    z-index: 1;
+
+    text-shadow: 1px 1px 2px #000;
+    padding: 0 16px;
+}
+
+/* Navbar & alphabet always above video */
+.navbar-custom,
+.alphabet-bar-wrapper,
+.alphabet-scroll-mobile{
+  position: relative;
+  z-index: 10;
 }
 
 /* ===== Dashboard ===== */
